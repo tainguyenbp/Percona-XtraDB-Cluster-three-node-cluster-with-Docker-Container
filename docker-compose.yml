@@ -1,0 +1,38 @@
+version: '2'
+services:
+
+    percona-xtradb-cluster-node1:
+        restart: always
+        image:  percona/percona-xtradb-cluster:5.6
+        container_name: percona-xtradb-cluster-node1
+        environment:
+          - MYSQL_ROOT_PASSWORD=P3rC0n@xtR@dbcLust3r
+          - CLUSTER_NAME=pxcluster1
+        networks:
+          - percona-xtradb-cluster-network
+
+    percona-xtradb-cluster-node2:
+        restart: always
+        image:  percona/percona-xtradb-cluster:5.6
+        container_name: percona-xtradb-cluster-node2
+        environment:
+          - MYSQL_ROOT_PASSWORD=P3rC0n@xtR@dbcLust3r
+          - CLUSTER_NAME=pxcluster1
+          - CLUSTER_JOIN=percona-xtradb-cluster-node1
+        networks:
+          - percona-xtradb-cluster-network    
+
+    percona-xtradb-cluster-node3:
+        restart: always
+        image:  percona/percona-xtradb-cluster:5.6
+        container_name: percona-xtradb-cluster-node3
+        environment:
+          - MYSQL_ROOT_PASSWORD=P3rC0n@xtR@dbcLust3r
+          - CLUSTER_NAME=pxcluster1
+          - CLUSTER_JOIN=percona-xtradb-cluster-node1
+        networks:
+          - percona-xtradb-cluster-network
+
+networks:
+  percona-xtradb-cluster-network:
+    driver: bridge
